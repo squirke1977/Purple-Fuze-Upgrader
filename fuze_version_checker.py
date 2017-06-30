@@ -40,16 +40,15 @@ else:
     print logged_in_username
     fuze_version = find_major_version('/Applications/Fuze.app/')
     if fuze_version >= 17 and os.path.exists('/Users/Shared/Fuze/'):
-        #unload and delete launchD and this file?
-
         print "already upgraded hurrah!"
         subprocess.check_output(unload_this_launchdaemon_command)
-        #subprocess.check_output(remove_this_launchdaemon_command)
+        subprocess.check_output(remove_this_launchdaemon_command)
     else:
         subprocess.check_output(pause_persistent_fuze_command)
         subprocess.check_output(quit_fuze_command)
         subprocess.check_output(run_munki_command)
         subprocess.check_output(restart_persistent_fuze_command)
+        subprocess.check_output(unload_this_launchdaemon_command)
 
     #UNLOAD/REMOVE LaunchD??? - or just unload - so this can re-run post reboot?
 
