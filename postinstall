@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#Script to fire up the LaunchDaemon delivered by this package
+
+/bin/launchctl load /Library/LaunchDaemons/com.zerowidth.launched.purple_fuze.plist
