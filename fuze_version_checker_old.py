@@ -37,7 +37,7 @@ else:
         subprocess.check_output(pause_persistent_fuze_command)
         subprocess.check_output(quit_fuze_command)
         subprocess.check_output(run_munki_command)
-	subprocess.check_output(restart_persistent_fuze_command)
+        subprocess.check_output(restart_persistent_fuze_command)
 
 print logged_in_username
 

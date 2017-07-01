@@ -23,7 +23,6 @@ logged_in_username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])
 
 unload_this_launchdaemon_command = ['/bin/launchctl', 'unload', '/Library/LaunchDaemons/com.zerowidth.launched.purple_fuze.plist']
 remove_this_launchdaemon_command = ['/bin/rm', '/Library/LaunchDaemons/com.zerowidth.launched.purple_fuze.plist']
-root_command = ['touch', '/Users/Shared/root_was_ere']
 
 pause_persistent_fuze_command = ['/bin/launchctl', 'unload', '/Library/LaunchDaemons/com.thoughtworks.ws.persistentFuze.plist']
 restart_persistent_fuze_command = ['/bin/launchctl', 'load', '/Library/LaunchDaemons/com.thoughtworks.ws.persistentFuze.plist']
@@ -32,15 +31,13 @@ run_munki_command = ['/usr/local/munki/managedsoftwareupdate', '--auto', '--munk
 
 #Test this script again at the login Window
 if logged_in_username == None:
-    print "hello root"
-    root_command = ['touch', '/Users/Shared/root_was_ere']
-    subprocess.check_output(root_command)
+    print "We're at the login window - nothing for this script to do here"
     exit(1)
 else:
     print logged_in_username
     fuze_version = find_major_version('/Applications/Fuze.app/')
     if fuze_version >= 17 and os.path.exists('/Users/Shared/Fuze/'):
-        print "already upgraded hurrah!"
+        print "already upgraded to Purple Fuze including authentication data!"
         subprocess.check_output(unload_this_launchdaemon_command)
         subprocess.check_output(remove_this_launchdaemon_command)
     else:
@@ -49,14 +46,3 @@ else:
         subprocess.check_output(run_munki_command)
         subprocess.check_output(restart_persistent_fuze_command)
         subprocess.check_output(unload_this_launchdaemon_command)
-
-    #UNLOAD/REMOVE LaunchD??? - or just unload - so this can re-run post reboot?
-
-if fuze_version >= 17 and os.path.exists('/Users/Shared/Fuze/'):
-#    subprocess.check_output(root_command)
-    print "you have new Fuze I can delete myself"
-elif fuze_version >= 17:
-    print "you have new fuze but no auth data"
-#    subprocess.check_output(root_command)
-else:
-    print "old Fuze = fake news"
