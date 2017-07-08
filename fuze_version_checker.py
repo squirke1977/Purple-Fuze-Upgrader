@@ -27,7 +27,7 @@ remove_this_launchdaemon_command = ['/bin/rm', '/Library/LaunchDaemons/com.zerow
 pause_persistent_fuze_command = ['/bin/launchctl', 'unload', '/Library/LaunchDaemons/com.thoughtworks.ws.persistentFuze.plist']
 restart_persistent_fuze_command = ['/bin/launchctl', 'load', '/Library/LaunchDaemons/com.thoughtworks.ws.persistentFuze.plist']
 quit_fuze_command = ['/usr/bin/killall', '-TERM',  'Fuze']
-run_munki_command = ['/usr/local/munki/managedsoftwareupdate', '--installonly', '--munkipkgsonly']
+run_munki_command = ['/usr/local/munki/managedsoftwareupdate', '--installwithnologout', '--munkipkgsonly']
 
 #Test this script again at the login Window
 if logged_in_username == None:
@@ -42,7 +42,10 @@ else:
         subprocess.check_output(remove_this_launchdaemon_command)
     else:
         subprocess.check_output(pause_persistent_fuze_command)
-        subprocess.check_output(quit_fuze_command)
+	try:
+        	subprocess.check_output(quit_fuze_command)
+	except:
+		print "Fuze isn't running"
         subprocess.check_output(run_munki_command)
         subprocess.check_output(restart_persistent_fuze_command)
         subprocess.check_output(unload_this_launchdaemon_command)

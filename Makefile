@@ -1,7 +1,7 @@
 USE_PKGBUILD=1
 include /usr/local/share/luggage/luggage.make
 TITLE=Purple_Fuze_upgrader
-PACKAGE_VERSION=1.2
+PACKAGE_VERSION=1.3
 REVERSE_DOMAIN=com.thoughtworks
 PAYLOAD=\
 	pack-script-preinstall\
